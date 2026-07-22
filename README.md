@@ -85,15 +85,15 @@ Run
 
 ## Supported Order Types
 
-| Order Type | Supported |
-|------------|-----------|
-| Limit      | ✅ |
-| Market     | ✅ |
-| IOC        | ✅ |
-| FOK        | ✅ |
-| GTC        | ✅ |
-| Cancel     | ✅ |
-| Partial Fill | ✅ |
+| Order Type Supported  |
+|-----------------------|
+| Limit                 |
+| Market                |
+| IOC                   |
+| FOK                   |
+| GTC                   |
+| Cancel                |
+| Partial Fill          |
 
 ---
 
