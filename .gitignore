@@ -1,0 +1,5 @@
+*.o
+lob
+.DS_Store
+benchmark/reports/*.json
+benchmark/reports/*.md
