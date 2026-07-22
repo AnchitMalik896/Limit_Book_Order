@@ -42,9 +42,13 @@ public:
     void start();
 
     // Submit an order; returns assigned order id.
+    // NOTE: Under the Single-Producer SPSC design, this method must ONLY be
+    // called from a single, dedicated ingestion thread.
     uint64_t submit(Order o);
 
     // Request a cancel. Non-blocking — enqueues the request.
+    // NOTE: Under the Single-Producer SPSC design, this method must ONLY be
+    // called from a single, dedicated ingestion thread (the same thread that calls submit).
     void cancel(std::string_view sym, uint64_t id);
 
     // Drain all pending trade notifications into a caller-supplied vector.
@@ -65,6 +69,10 @@ private:
     uint32_t                                              slot_count_ = 0;
     std::atomic<uint64_t>               next_id_{1};
     std::atomic<bool>                   running_{false};
+    std::atomic<std::thread::id>        producer_thread_id_{}; // Track and enforce single producer
+
+    // Enforce that only a single producer thread is calling submit() and cancel()
+    void enforceSingleProducer();
 
     [[nodiscard]] SymbolSlot* slotFor(uint32_t sym_idx) noexcept {
         for (uint32_t i = 0; i < slot_count_; ++i)
