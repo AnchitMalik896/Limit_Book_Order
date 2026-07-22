@@ -2,18 +2,19 @@
 #include <cstdint>
 #include <format>
 #include <iostream>
+#include <string_view>
 
 struct Trade {
     uint64_t buy_id;
     uint64_t sell_id;
+    int64_t  ts;
     int      price;
     int      qty;
-    int64_t  ts;
+    uint32_t sym_idx;
 
-    void print() const {
+    void print(std::string_view sym) const {
         std::cout << std::format(
-            "TRADE: BUY_ID={:<6}  SELL_ID={:<6}  PRICE={:<6}  QTY={}\n",
-            buy_id, sell_id, price, qty
-        );
+            "TRADE [{:<4}]  BUY={:<6}  SELL={:<6}  PRICE={:<7}  QTY={}\n",
+            sym, buy_id, sell_id, price, qty);
     }
 };
